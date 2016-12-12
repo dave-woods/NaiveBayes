@@ -10,5 +10,10 @@ public class Feature<T>
 		this.attribute = attribute;
 		this.value = value;
 	}
+	
+	public String toString()
+	{
+		return "<" + attribute + ", " + value + ">";
+	}
 
 }

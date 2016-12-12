@@ -2,24 +2,34 @@ package classify;
 
 public class Category
 {
-	private String title;
-	public Category(String title)
+	public String category;
+	
+	public Category()
 	{
-		this.title = title;
+		this.category = "";
 	}
 	
-	public String getTitle()
+	public Category(String category)
 	{
-		return this.title;
+		this.category = category;
 	}
 	
-	public boolean equals(Category other)
+	@Override
+	public boolean equals(Object other)
 	{
-		return this.title.matches(other.title);
+		if (!(other instanceof Category))
+		    return false;
+		Category otherCategory = (Category) other;
+		return this.category.matches(otherCategory.category);
+	}
+	
+	public int hashCode()
+	{
+		return category.hashCode();
 	}
 	
 	public String toString()
 	{
-		return this.title;
+		return this.category;
 	}
 }

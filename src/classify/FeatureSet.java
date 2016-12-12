@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
+@SuppressWarnings("serial")
 public class FeatureSet extends HashMap<String, Feature<?>>
 {
 	public FeatureSet()
@@ -26,17 +27,30 @@ public class FeatureSet extends HashMap<String, Feature<?>>
 		return super.get(attribute);
 	}
 
+	public Feature<?>[] getFeatures()
+	{
+		Feature<?>[] features = new Feature<?>[super.size()];
+		Iterator<Entry<String, Feature<?>>> it = super.entrySet().iterator();
+		int i = 0;
+		while (it.hasNext())
+		{
+			Map.Entry<String, Feature<?>> pair = (Map.Entry<String, Feature<?>>) it.next();
+			Feature<?> f = (Feature<?>)pair.getValue();
+			features[i] = f;
+		}
+		return features;
+	}
+	
 	public String toString()
 	{
 		String result = "{";
-		Iterator it = super.entrySet().iterator();
+		Iterator<Entry<String, Feature<?>>> it = super.entrySet().iterator();
 		while (it.hasNext())
 		{
-			Map.Entry pair = (Map.Entry) it.next();
-			Feature f = (Feature)pair.getValue();
+			Map.Entry<String, Feature<?>> pair = (Map.Entry<String, Feature<?>>) it.next();
+			Feature<?> f = (Feature<?>)pair.getValue();
 			result += (f.attribute + ": " + f.value.toString() + ", ");
-			it.remove(); // avoids a ConcurrentModificationException
 		}
-		return result.substring(0, result.length() - 2) + "}";
+		return result.length() > 2 ? result.substring(0, result.length() - 2) + "}" : "{}";
 	}
 }

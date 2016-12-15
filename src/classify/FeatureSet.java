@@ -26,6 +26,11 @@ public class FeatureSet extends HashMap<String, Feature<?>>
 	{
 		return super.get(attribute);
 	}
+	
+	public int size()
+	{
+		return super.size();
+	}
 
 	public Feature<?>[] getFeatures()
 	{
@@ -37,8 +42,20 @@ public class FeatureSet extends HashMap<String, Feature<?>>
 			Map.Entry<String, Feature<?>> pair = (Map.Entry<String, Feature<?>>) it.next();
 			Feature<?> f = (Feature<?>)pair.getValue();
 			features[i] = f;
+			i++;
 		}
 		return features;
+	}
+	
+	public String[] getAttributes()
+	{
+		Object[] keys = super.keySet().toArray();
+		String attributes[] = new String[keys.length];
+		for (int i = 0; i < keys.length; i++)
+		{
+			attributes[i] = keys[i].toString();
+		}
+		return attributes;
 	}
 	
 	public String toString()

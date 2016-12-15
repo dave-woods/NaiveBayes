@@ -9,43 +9,40 @@ import java.util.Map.Entry;
 
 public class Classifier
 {
+	private int numCategories;
+	
 	public Classifier() 
 	{
 		
 	}
 	
-	public Category classify(DataItem sample, DataItem[] kb)
+	public Category classify(DataItem sample, DataItem[] knowledgeBase)
 	{
-		HashMap<Category, ArrayList<DataItem>> categoryList = splitByCategory(kb);
-//		System.out.println(variance(new double[] {6.0, 5.92, 5.58, 5.92}));
+		HashMap<Category, ArrayList<DataItem>> categoryList = splitByCategory(knowledgeBase);
+		numCategories = categoryList.size();
+		
+		double max = 0.0;
+		Category prediction = new Category();
+		
 		Iterator<Entry<Category, ArrayList<DataItem>>> it = categoryList.entrySet().iterator();
-		while (it.hasNext())
+		while (it.hasNext()) // iterate categories
 		{
 			Entry<Category, ArrayList<DataItem>> pair = (Map.Entry<Category, ArrayList<DataItem>>) it.next();
-			System.out.println(pair.getKey() + ": ");
-			for (Object o : pair.getValue().stream().map((item) -> item.getFeatures()).toArray())
+			
+			Category category = pair.getKey();
+			ArrayList<DataItem> list = pair.getValue();
+			DataItem[] items = list.toArray(new DataItem[list.size()]);
+
+			double post = posterior(category, items, sample.getFeatureSet());
+//			System.out.println("posterior(" + category + ") = " + post);
+			if (post > max)
 			{
-				if (o instanceof FeatureSet)
-				{
-					Feature<?>[] fs = ((FeatureSet) o).getFeatures();
-					for (Feature<?> f : fs)
-					{
-						System.out.println("\t" + f.attribute + " -> " + f.value);
-					}
-					
-				}
-					
+				prediction = category;
+				max = post;
 			}
-//			Object[] hobjs = pair.getValue().stream().map((item) -> item.getFeature("height").value).toArray();
-//			double[] heights = new double[hobjs.length];
-//			
-//			for (int i = 0; i < hobjs.length; i++)
-//			{
-//				heights[i] = (double) hobjs[i];
-//			}
-//			System.out.println("\tmean(height) = " + mean(heights) + "\n\tvariance(height) = " + variance(heights));
 		}
-		return new Category();
+		
+		return prediction;
 	}
 	
 	private HashMap<Category, ArrayList<DataItem>> splitByCategory(DataItem[] items)
@@ -59,6 +56,31 @@ public class Classifier
 			list.get(c).add(item);
 		}
 		return list;
+	}
+	
+	private double posterior(Category category, DataItem[] itemsInCategory, FeatureSet sample)
+	{
+		double pCategory = 1.0 / numCategories;
+//		System.out.println("P(" + category + ") = " + pCategory);
+		double result = pCategory;
+		for (Feature<?> f : sample.getFeatures())
+		{
+			double pFeature = probabilty(f, DataItem.getFeatureAcrossItems(f.attribute, itemsInCategory));
+//			System.out.println("p(" + f.attribute + "|" + category + ") = " + pFeature);
+			result *= pFeature;
+		}
+		
+		return result;
+	}
+
+	private double probabilty(Feature<?> feature, Feature<?>[] items)
+	{
+		double[] values = new double[items.length];
+		for (int i = 0; i < items.length; i++)
+		{
+			values[i] = Double.parseDouble(items[i].value.toString());
+		}
+		return (1.0 / Math.sqrt(2.0 * Math.PI * variance(values))) * Math.exp((-(Math.pow(Double.parseDouble(feature.value.toString()) - mean(values), 2.0))) / (2 * variance(values)));
 	}
 	
 	private double variance(double[] data)

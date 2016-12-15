@@ -78,8 +78,13 @@ public class RunTests
 //		for (DataItem item : items)
 //			System.out.println(item);
 		
+		DataItem sample = new DataItem("", new Feature[]{
+				new Feature<Double>("height", 6.0),
+				new Feature<Integer>("weight", 130),
+				new Feature<Integer>("foot size", 8)
+		});
 		
 		Classifier c = new Classifier();
-		c.classify(items[1], items);
+		System.out.println(c.classify(sample, items));
 	}
 }

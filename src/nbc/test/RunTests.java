@@ -1,6 +1,5 @@
 package nbc.test;
 
-import classify.Category;
 import classify.Classifier;
 import classify.DataItem;
 import classify.Feature;
@@ -35,53 +34,53 @@ public class RunTests
 		
 		DataItem[] items = new DataItem[] {
 			new DataItem("male", new Feature[]{
-				new Feature<Double>("height", 6.0),
-				new Feature<Integer>("weight", 180),
-				new Feature<Integer>("foot size", 12)
+				new Feature("height", 6.0),
+				new Feature("weight", 180),
+				new Feature("foot size", 12)
 			}),
 			new DataItem("male", new Feature[]{
-				new Feature<Double>("height", 5.92),
-				new Feature<Integer>("weight", 190),
-				new Feature<Integer>("foot size", 11)
+				new Feature("height", 5.92),
+				new Feature("weight", 190),
+				new Feature("foot size", 11)
 			}),
 			new DataItem("male", new Feature[]{
-				new Feature<Double>("height", 5.58),
-				new Feature<Integer>("weight", 170),
-				new Feature<Integer>("foot size", 12)
+				new Feature("height", 5.58),
+				new Feature("weight", 170),
+				new Feature("foot size", 12)
 			}),
 			new DataItem("male", new Feature[]{
-				new Feature<Double>("height", 5.92),
-				new Feature<Integer>("weight", 165),
-				new Feature<Integer>("foot size", 10)
+				new Feature("height", 5.92),
+				new Feature("weight", 165),
+				new Feature("foot size", 10)
 			}),
 			new DataItem("female", new Feature[]{
-				new Feature<Double>("height", 5.0),
-				new Feature<Integer>("weight", 100),
-				new Feature<Integer>("foot size", 6)
+				new Feature("height", 5.0),
+				new Feature("weight", 100),
+				new Feature("foot size", 6)
 			}),
 			new DataItem("female", new Feature[]{
-				new Feature<Double>("height", 5.5),
-				new Feature<Integer>("weight", 150),
-				new Feature<Integer>("foot size", 8)
+				new Feature("height", 5.5),
+				new Feature("weight", 150),
+				new Feature("foot size", 8)
 			}),
 			new DataItem("female", new Feature[]{
-				new Feature<Double>("height", 5.42),
-				new Feature<Integer>("weight", 130),
-				new Feature<Integer>("foot size", 7)
+				new Feature("height", 5.42),
+				new Feature("weight", 130),
+				new Feature("foot size", 7)
 			}),
 			new DataItem("female", new Feature[]{
-				new Feature<Double>("height", 5.75),
-				new Feature<Integer>("weight", 150),
-				new Feature<Integer>("foot size", 9)
+				new Feature("height", 5.75),
+				new Feature("weight", 150),
+				new Feature("foot size", 9)
 			})
 		};
 //		for (DataItem item : items)
 //			System.out.println(item);
 		
 		DataItem sample = new DataItem("", new Feature[]{
-				new Feature<Double>("height", 6.0),
-				new Feature<Integer>("weight", 130),
-				new Feature<Integer>("foot size", 8)
+				new Feature("height", 6),
+				new Feature("weight", 130),
+				new Feature("foot size", 8)
 		});
 		
 		Classifier c = new Classifier();

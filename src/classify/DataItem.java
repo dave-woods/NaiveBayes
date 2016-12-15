@@ -42,31 +42,31 @@ public class DataItem
 		this.id = ++totalItems;
 	}
 	
-	public DataItem(String category, Feature<?>[] features)
+	public DataItem(String category, Feature[] features)
 	{
 		this.category = new Category(category);
 		this.features = new FeatureSet();
-		for (Feature<?> f : features)
+		for (Feature f : features)
 		{
 			this.features.add(f.attribute, f);
 		}
 		this.id = ++totalItems;
 	}
 	
-	public DataItem(Category category, Feature<?>[] features)
+	public DataItem(Category category, Feature[] features)
 	{
 		this.category = category;
 		this.features = new FeatureSet();
-		for (Feature<?> f : features)
+		for (Feature f : features)
 		{
 			this.features.add(f.attribute, f);
 		}
 		this.id = ++totalItems;
 	}
 	
-	public Feature<?> getFeature(String attribute) throws FeatureNotFoundException
+	public Feature getFeature(String attribute) throws FeatureNotFoundException
 	{
-		Feature<?> f = features.get(attribute);
+		Feature f = features.get(attribute);
 		if (f != null)
 			return f;
 		throw new FeatureNotFoundException("The feature [" + attribute + "] could not be found for DataItem " + this.id + ".");
@@ -77,14 +77,14 @@ public class DataItem
 		this.category = new Category(category);
 	}
 	
-	public void addFeature(Feature<?> feature)
+	public void addFeature(Feature feature)
 	{
 		this.features.add(feature.attribute, feature);
 	}
 	
-	public void addFeatures(Feature<?>[] features)
+	public void addFeatures(Feature[] features)
 	{
-		for (Feature<?> f : features)
+		for (Feature f : features)
 		{
 			this.features.add(f.attribute, f);
 		}
@@ -105,9 +105,9 @@ public class DataItem
 		return features;
 	}
 	
-	public static Feature<?>[] getFeatureAcrossItems(String attribute, DataItem[] items)
+	public static Feature[] getFeatureAcrossItems(String attribute, DataItem[] items)
 	{
-		Feature<?>[] features = new Feature<?>[items.length];
+		Feature[] features = new Feature[items.length];
 		for (int i = 0; i < items.length; i++)
 		{
 			try
@@ -117,6 +117,7 @@ public class DataItem
 			catch (FeatureNotFoundException e)
 			{
 				e.printStackTrace();
+				System.exit(1);
 			}
 		}
 		return features;

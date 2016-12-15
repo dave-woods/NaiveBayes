@@ -34,7 +34,6 @@ public class Classifier
 			DataItem[] items = list.toArray(new DataItem[list.size()]);
 
 			double post = posterior(category, items, sample.getFeatureSet());
-//			System.out.println("posterior(" + category + ") = " + post);
 			if (post > max)
 			{
 				prediction = category;
@@ -61,26 +60,24 @@ public class Classifier
 	private double posterior(Category category, DataItem[] itemsInCategory, FeatureSet sample)
 	{
 		double pCategory = 1.0 / numCategories;
-//		System.out.println("P(" + category + ") = " + pCategory);
 		double result = pCategory;
-		for (Feature<?> f : sample.getFeatures())
+		for (Feature f : sample.getFeatures())
 		{
 			double pFeature = probabilty(f, DataItem.getFeatureAcrossItems(f.attribute, itemsInCategory));
-//			System.out.println("p(" + f.attribute + "|" + category + ") = " + pFeature);
 			result *= pFeature;
 		}
 		
 		return result;
 	}
 
-	private double probabilty(Feature<?> feature, Feature<?>[] items)
+	private double probabilty(Feature feature, Feature[] items)
 	{
 		double[] values = new double[items.length];
 		for (int i = 0; i < items.length; i++)
 		{
-			values[i] = Double.parseDouble(items[i].value.toString());
+			values[i] = items[i].value;
 		}
-		return (1.0 / Math.sqrt(2.0 * Math.PI * variance(values))) * Math.exp((-(Math.pow(Double.parseDouble(feature.value.toString()) - mean(values), 2.0))) / (2 * variance(values)));
+		return (1.0 / Math.sqrt(2.0 * Math.PI * variance(values))) * Math.exp((-(Math.pow(feature.value - mean(values), 2.0))) / (2 * variance(values)));
 	}
 	
 	private double variance(double[] data)

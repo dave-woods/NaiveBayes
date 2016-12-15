@@ -1,11 +1,11 @@
 package classify;
 
-public class Feature<T>
+public class Feature
 {
 	public String attribute;
-	public T value;
+	public double value;
 	
-	public Feature(String attribute, T value)
+	public Feature(String attribute, double value)
 	{
 		this.attribute = attribute;
 		this.value = value;

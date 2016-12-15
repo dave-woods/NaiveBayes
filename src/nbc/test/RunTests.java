@@ -1,8 +1,8 @@
 package nbc.test;
 
-import classify.Classifier;
-import classify.DataItem;
-import classify.Feature;
+import nbc.classify.Classifier;
+import nbc.classify.DataItem;
+import nbc.classify.Feature;
 
 public class RunTests
 {

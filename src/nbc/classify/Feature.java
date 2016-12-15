@@ -1,4 +1,4 @@
-package classify;
+package nbc.classify;
 
 public class Feature
 {

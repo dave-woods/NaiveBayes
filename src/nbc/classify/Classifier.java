@@ -1,4 +1,4 @@
-package classify;
+package nbc.classify;
 
 import java.util.ArrayList;
 import java.util.Arrays;
